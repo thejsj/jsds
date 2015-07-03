@@ -7,8 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --compilers js:babel/register test"
+    "test": "./node_modules/mocha/bin/mocha --reporter=spec --compilers js:babel/register test"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "taser": "^1.0.0"
+  }
 }

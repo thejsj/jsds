@@ -1,4 +1,4 @@
 
 describe('Tree', ()  => {
-  require('./binary-search-tree-array');
+  require('./binary-search-array');
 });
