@@ -1,0 +1,14 @@
+{
+  "name": "jsds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel/register test"
+  },
+  "author": "",
+  "license": "ISC"
+}
