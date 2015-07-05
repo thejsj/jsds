@@ -5,6 +5,9 @@ import BinarySearchTree from '../lib/binary-search-tree';
 describe('BinarySearchTree', () => {
 
   let tree;
+  let sortNumbers = function sortNumbers (a,b) {
+    return a - b;
+  };
 
   beforeEach(() => {
     tree = new BinarySearchTree(5);
@@ -107,15 +110,76 @@ describe('BinarySearchTree', () => {
   });
 
   describe('Remove', ()  => {
-    it('should remove values', () => {
+    it('should remove values with no children', () => {
       tree.insert(4);
-      tree.insert(3);
-      tree.insert(0);
-      tree.insert(2);
-      tree.remove(2);
-      tree.remove(3);
-      tree.getValues().sort().should.eql([0, 4, 5].sort());
+      tree.insert(6);
+      tree.remove(4);
+      tree.getValues().sort().should.eql([5, 6]);
     });
+
+    it('should remove values with 1 child', () => {
+      tree.insert(4);
+      tree.insert(2);
+      tree.insert(6);
+      tree.remove(4);
+      tree.getValues().sort().should.eql([2, 5, 6]);
+    });
+
+    it('should remove values with 2 children', () => {
+      /*            5
+       *      3         6
+       *   2    4
+       */
+      tree.insert(3);
+      tree.insert(4);
+      tree.insert(2);
+      tree.insert(6);
+      tree.remove(3);
+      tree.getValues().sort().should.eql([2, 4, 5, 6]);
+    });
+
+    it('should remove values with 2 children and sub children', () => {
+      /*           5
+       *      1         6
+       *   -1    3
+       *       2  4
+       */
+      tree.insert(1);
+      tree.insert(6);
+      tree.insert(-1);
+      tree.insert(3);
+      tree.insert(2);
+      tree.insert(4);
+      tree.remove(1);
+      tree.getValues().sort().should.eql([-1, 2, 3, 4, 5, 6]);
+    });
+
+    xit('should remove the parent node', () => {
+      tree.insert(4);
+      tree.insert(6);
+      tree.remove(5);
+      tree.getValues().sort().shoul.eql([4, 6]);
+    });
+
+    it('should remove values with 3 children and sub children', () => {
+      /*           5
+       *      1                 9
+       *                 7             11
+       *              6    8        10    12
+       */
+      tree.insert(1);
+      tree.insert(9);
+      tree.insert(7);
+      tree.insert(6);
+      tree.insert(8);
+      tree.insert(11);
+      tree.insert(10);
+      tree.insert(12);
+
+      tree.remove(9);
+      tree.getValues().sort(sortNumbers).should.eql([1, 5, 6, 7, 8, 10, 11, 12]);
+    });
+
   });
 
 
