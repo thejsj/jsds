@@ -94,6 +94,25 @@ describe('BinarySearchTree', () => {
     });
   });
 
+  xdescribe('forEach (Breadth First)', ()  => {
+    it('should traverse through values breadth first', () => {
+      tree.insert(3);
+      tree.insert(4);
+      tree.insert(1);
+      tree.insert(0);
+
+      tree.insert(7);
+      tree.insert(6);
+      tree.insert(8);
+
+      var values = [];
+      tree.forEachBreadthFirst((value) => {
+        values.push(value);
+      });
+      values.should.eql([5, 3, 7, 4, 1, 6, 8, 0]);
+    });
+  });
+
   describe('getMaxDepth', () => {
     it('should get the max depth on a 2 node tree', () => {
       tree.insert(4);
@@ -106,6 +125,24 @@ describe('BinarySearchTree', () => {
       tree.insert(3);
       tree.insert(4);
       tree.getMaxDepth().should.equal(5);
+    });
+  });
+
+  describe('getMinDepth', ()  => {
+    it('should get the min depth for a 1 node tree', () => {
+      tree.getMinDepth().should.equal(1);
+    });
+
+    it('should get the min depth for a 7 node tree', () => {
+      tree.insert(3);
+      tree.insert(4);
+      tree.insert(1);
+
+      tree.insert(7);
+      tree.insert(6);
+      tree.insert(8);
+      tree.insert(9);
+      tree.getMinDepth().should.equal(3);
     });
   });
 
@@ -154,11 +191,11 @@ describe('BinarySearchTree', () => {
       tree.getValues().sort().should.eql([-1, 2, 3, 4, 5, 6]);
     });
 
-    xit('should remove the parent node', () => {
+    it('should remove the parent node', () => {
       tree.insert(4);
       tree.insert(6);
       tree.remove(5);
-      tree.getValues().sort().shoul.eql([4, 6]);
+      tree.getValues().sort().should.eql([4, 6]);
     });
 
     it('should remove values with 3 children and sub children', () => {
@@ -179,12 +216,6 @@ describe('BinarySearchTree', () => {
       tree.remove(9);
       tree.getValues().sort(sortNumbers).should.eql([1, 5, 6, 7, 8, 10, 11, 12]);
     });
-
-  });
-
-
-  describe('Breadth First Traversal', ()  => {
-
   });
 
   describe('Rebalancing', ()  => {
