@@ -11,11 +11,11 @@ describe('Bubble Sort', () => {
   });
 
   it('should throw an error when trying to add anything that\'s not an array', ()  => {
-    bubbleSort('2').should.throw();
-    bubbleSort(2).should.throw();
-    bubbleSort({ hello: 2 }).should.throw();
-    bubbleSort(undefined).should.throw();
-    bubbleSort(null).should.throw();
+    bubbleSort.bind(bubbleSort, '2').should.throw();
+    bubbleSort.bind(bubbleSort, 2).should.throw();
+    bubbleSort.bind(bubbleSort, { hello: 2 }).should.throw();
+    bubbleSort.bind(bubbleSort, undefined).should.throw();
+    bubbleSort.bind(bubbleSort, null).should.throw();
   });
 
   it('should sort an array', ()  => {
