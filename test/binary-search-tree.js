@@ -62,6 +62,26 @@ describe('BinarySearchTree', () => {
     });
   });
 
+  describe('forEach (Sorted)', () => {
+    it('should iterate over the values in the correct order (sorted)', () => {
+      tree.insert(4);
+      tree.insert(6);
+      tree.getValues().should.eql([4, 5, 6]);
+    });
+
+    it('should iterate over the values in the correct order (3 levels) (sorted)', () => {
+      tree.insert(2);
+      tree.insert(8);
+      tree.insert(1);
+      tree.insert(3);
+      tree.insert(4);
+      tree.insert(9);
+      tree.insert(7);
+      tree.insert(6);
+      tree.getValues().should.eql([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    });
+  });
+
   describe('forEach (Depth First)', () => {
     it('should traverse through the values in the correct order (One child)', () => {
       /*!
@@ -75,7 +95,7 @@ describe('BinarySearchTree', () => {
       tree.insert(2);
       tree.insert(3);
       tree.insert(4);
-      tree.getValues().should.eql([5, 1, 2, 3, 4]);
+      tree.getValuesDepthFirst().should.eql([5, 1, 2, 3, 4]);
     });
 
     it('should traverse through the values in the correct order (One child)', () => {
@@ -90,7 +110,7 @@ describe('BinarySearchTree', () => {
       tree.insert(2);
       tree.insert(6);
       tree.insert(8);
-      tree.getValues().should.eql([5, 3, 1, 2, 7, 6, 8]);
+      tree.getValuesDepthFirst().should.eql([5, 3, 1, 2, 7, 6, 8]);
     });
   });
 
@@ -167,7 +187,7 @@ describe('BinarySearchTree', () => {
       tree.insert(4);
       tree.insert(6);
       tree.remove(4);
-      tree.getValues().sort().should.eql([5, 6]);
+      tree.getValues().should.eql([5, 6]);
     });
 
     it('should remove values with 1 child', () => {
@@ -175,7 +195,7 @@ describe('BinarySearchTree', () => {
       tree.insert(2);
       tree.insert(6);
       tree.remove(4);
-      tree.getValues().sort().should.eql([2, 5, 6]);
+      tree.getValues().should.eql([2, 5, 6]);
     });
 
     it('should remove values with 2 children', () => {
@@ -188,7 +208,7 @@ describe('BinarySearchTree', () => {
       tree.insert(2);
       tree.insert(6);
       tree.remove(3);
-      tree.getValues().sort().should.eql([2, 4, 5, 6]);
+      tree.getValues().should.eql([2, 4, 5, 6]);
     });
 
     it('should remove values with 2 children and sub children', () => {
@@ -204,14 +224,14 @@ describe('BinarySearchTree', () => {
       tree.insert(2);
       tree.insert(4);
       tree.remove(1);
-      tree.getValues().sort().should.eql([-1, 2, 3, 4, 5, 6]);
+      tree.getValues().should.eql([-1, 2, 3, 4, 5, 6]);
     });
 
     it('should remove the parent node', () => {
       tree.insert(4);
       tree.insert(6);
       tree.remove(5);
-      tree.getValues().sort().should.eql([4, 6]);
+      tree.getValues().should.eql([4, 6]);
     });
 
     it('should remove values with 3 children and sub children', () => {
@@ -230,7 +250,7 @@ describe('BinarySearchTree', () => {
       tree.insert(12);
 
       tree.remove(9);
-      tree.getValues().sort(sortNumbers).should.eql([1, 5, 6, 7, 8, 10, 11, 12]);
+      tree.getValues().should.eql([1, 5, 6, 7, 8, 10, 11, 12]);
     });
   });
 
@@ -247,13 +267,13 @@ describe('BinarySearchTree', () => {
       tree.insert(2);
       tree.insert(1);
       tree._rebalance(); // Force rebalance. Private method. This might change.
-      tree.getValues().sort().should.eql([1, 2, 3, 4, 5]);
+      tree.getValues().should.eql([1, 2, 3, 4, 5]);
     });
 
     it('should rebalance itself if maxDepth is 2x the minDepth', () => {
       tree.insert(4);
       tree.insert(6);
-      tree.insert(3); // Rebalce (4, 3, 5)
+      tree.insert(3); // Rebalance (4, 3, 5)
       tree.insert(2);
       tree.insert(1);
       tree.insert(5);
@@ -263,7 +283,7 @@ describe('BinarySearchTree', () => {
        *    2       6
        *  1   3   5   7
        */
-      tree.getValues().should.eql([4, 2, 1, 3, 6, 5, 7]);
+      tree.getValuesDepthFirst().should.eql([4, 2, 1, 3, 6, 5, 7]);
     });
 
   });
