@@ -6,3 +6,7 @@ describe('Tree', ()  => {
 describe('Bubble Sort', ()  => {
   require('./sorts/bubble-sort');
 });
+
+describe('Insertion Sort', ()  => {
+  require('./sorts/insertion-sort');
+});
