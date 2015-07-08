@@ -10,7 +10,7 @@ describe('BinarySearchTree', () => {
   };
 
   beforeEach(() => {
-    tree = new BinarySearchTree(5);
+    tree = new BinarySearchTree(5, undefined, { selfRebalance: false });
   });
 
   describe('Init', ()  => {
@@ -94,8 +94,14 @@ describe('BinarySearchTree', () => {
     });
   });
 
-  xdescribe('forEach (Breadth First)', ()  => {
+  describe('forEach (Breadth First)', ()  => {
     it('should traverse through values breadth first', () => {
+      /*!
+       *                 5
+       *         3                7
+       *     1       4       6         8
+       *  0
+       */
       tree.insert(3);
       tree.insert(4);
       tree.insert(1);
@@ -109,7 +115,7 @@ describe('BinarySearchTree', () => {
       tree.forEachBreadthFirst((value) => {
         values.push(value);
       });
-      values.should.eql([5, 3, 7, 4, 1, 6, 8, 0]);
+      values.should.eql([5, 3, 7, 1, 4, 6, 8, 0]);
     });
   });
 
@@ -124,8 +130,10 @@ describe('BinarySearchTree', () => {
       tree.insert(2);
       tree.insert(3);
       tree.insert(4);
+      tree.getMinDepth().should.equal(1);
       tree.getMaxDepth().should.equal(5);
     });
+
   });
 
   describe('getMinDepth', ()  => {
@@ -143,6 +151,14 @@ describe('BinarySearchTree', () => {
       tree.insert(8);
       tree.insert(9);
       tree.getMinDepth().should.equal(3);
+    });
+
+    it('should get the min depth on a 5 node tree', () => {
+      tree.insert(1);
+      tree.insert(2);
+      tree.insert(3);
+      tree.insert(4);
+      tree.getMinDepth().should.equal(1);
     });
   });
 
@@ -219,6 +235,36 @@ describe('BinarySearchTree', () => {
   });
 
   describe('Rebalancing', ()  => {
+
+    beforeEach(() => {
+      // Enable automatic rebalancing
+      tree = new BinarySearchTree(5);
+    });
+
+    it('should have all the same values after rebalancing', () => {
+      tree.insert(4);
+      tree.insert(3);
+      tree.insert(2);
+      tree.insert(1);
+      tree._rebalance(); // Force rebalance. Private method. This might change.
+      tree.getValues().sort().should.eql([1, 2, 3, 4, 5]);
+    });
+
+    it('should rebalance itself if maxDepth is 2x the minDepth', () => {
+      tree.insert(4);
+      tree.insert(6);
+      tree.insert(3); // Rebalce (4, 3, 5)
+      tree.insert(2);
+      tree.insert(1);
+      tree.insert(5);
+      tree.insert(7);
+      /*!
+       *        4
+       *    2       6
+       *  1   3   5   7
+       */
+      tree.getValues().should.eql([4, 2, 1, 3, 6, 5, 7]);
+    });
 
   });
 

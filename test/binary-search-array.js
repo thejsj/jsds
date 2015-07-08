@@ -2,7 +2,7 @@
 import should from 'should';
 import BinarySearchArray from '../lib/binary-search-array';
 
-describe('Binary search tree (implemented with an array)', () => {
+describe('BinarySearchArray (binary tree implemented with an array)', () => {
 
   let biTree = new BinarySearchArray();
 
