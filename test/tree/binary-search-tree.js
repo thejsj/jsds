@@ -1,6 +1,6 @@
 /*global describe: true, it:true, beforeEach:true */
 import should from 'should';
-import BinarySearchTree from '../lib/binary-search-tree';
+import BinarySearchTree from '../../lib/tree/binary-search-tree';
 
 describe('BinarySearchTree', () => {
 
@@ -59,6 +59,30 @@ describe('BinarySearchTree', () => {
       tree.contains(7).should.equal(true);
       tree.contains(0).should.equal(true);
       tree.contains(6).should.equal(false);
+    });
+  });
+
+  describe('Between', () => {
+    it('should get all values between 4 and 6', () => {
+      tree.insert(3);
+      tree.insert(4);
+      tree.insert(7);
+      tree.insert(6);
+      tree.between(4, 7).should.eql([ 4, 5, 6 ]);
+    });
+
+    it('should get all values between 2 and 8 in a 3 level tree', () => {
+      tree.insert(0);
+      tree.insert(2);
+      tree.insert(1);
+      tree.insert(3);
+      tree.insert(4);
+      tree.insert(10);
+      tree.insert(7);
+      tree.insert(6);
+      tree.insert(8);
+      tree.insert(9);
+      tree.between(2, 8).should.eql([ 2, 3, 4, 5, 6, 7 ]);
     });
   });
 

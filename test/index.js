@@ -1,12 +1,9 @@
+/*global describe:true */
 
-describe('Tree', ()  => {
-  require('./binary-search-array');
+describe('Trees', ()  => {
+  require('./tree');
 });
 
-describe('Bubble Sort', ()  => {
-  require('./sorts/bubble-sort');
-});
-
-describe('Insertion Sort', ()  => {
-  require('./sorts/insertion-sort');
+describe('Sorts', ()  => {
+  require('./sorts');
 });

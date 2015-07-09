@@ -80,8 +80,8 @@ let BinarySearchTree = class BinarySearchTree {
   }
 
   between (lowerValue, higherValue) {
-    let low = Math.max(lowerValue, higherValue);
-    let high = Math.min(lowerValue, higherValue);
+    let low = Math.min(lowerValue, higherValue);
+    let high = Math.max(lowerValue, higherValue);
     return this._between(low, high, []);
   }
 
@@ -201,17 +201,17 @@ let BinarySearchTree = class BinarySearchTree {
     return;
   }
 
-  //_between (low, high, values) {
-    //if (low <= this.value && this.value < high) {
-      //values.push(this.value);
-      //this.left._between(low, high, values);
-      //this.right._between(low, high, values);
-    //} else {
-      //if (this.value < low) this.left._between(low, high, values);
-      //if (high < this.value) this.right._between(low, high, values);
-    //}
-    //return values;
-  //}
+  _between (low, high, values) {
+    console.log(this.value);
+    if (low <= this.value && this.value < high) {
+      values.push(this.value);
+      this.left._between(low, high, values);
+      this.right._between(low, high, values);
+      return values;
+    }
+    if (this.value < low && this.left !== null) this.left._between(low, high, values);
+    if (high < this.value && this.right !== null) this.right._between(low, high, values);
+  }
 
   _checkForRebalance () {
     if (this.opts.selfRebalance && this.getMaxDepth() / 2 >= this.getMinDepth()) {

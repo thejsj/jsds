@@ -1,6 +1,6 @@
 /*global describe: true, it:true */
 import should from 'should';
-import BinarySearchArray from '../lib/binary-search-array';
+import BinarySearchArray from '../../lib/tree/binary-search-array';
 
 describe('BinarySearchArray (binary tree implemented with an array)', () => {
 
