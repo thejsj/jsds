@@ -10,7 +10,7 @@ describe('BinarySearchStringTree', () => {
   };
 
   beforeEach(() => {
-    tree = new BinarySearchStringTree("j", undefined, { selfRebalance: false });
+    tree = new BinarySearchStringTree('j', { selfRebalance: false });
   });
 
   describe('Init', ()  => {
@@ -86,228 +86,229 @@ describe('BinarySearchStringTree', () => {
     });
   });
 
-  xdescribe('forEach (Sorted)', () => {
+  describe('forEach (Sorted)', () => {
     it('should iterate over the values in the correct order (sorted)', () => {
-      tree.insert(4);
-      tree.insert(6);
-      tree.getValues().should.eql([4, 5, 6]);
+      tree.insert('c');
+      tree.insert('p');
+      tree.insert('b');
+      tree.getValues().should.eql(['b', 'c', 'j', 'p']);
     });
 
     it('should iterate over the values in the correct order (3 levels) (sorted)', () => {
-      tree.insert(2);
-      tree.insert(8);
-      tree.insert(1);
-      tree.insert(3);
-      tree.insert(4);
-      tree.insert(9);
-      tree.insert(7);
-      tree.insert(6);
-      tree.getValues().should.eql([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      tree.insert('c');
+      tree.insert('p');
+      tree.insert('b');
+      tree.insert('a');
+      tree.insert('o');
+      tree.insert('z');
+      tree.insert('g');
+      tree.insert('yano');
+      tree.insert('d');
+      tree.getValues().should.eql([ 'a', 'b', 'c', 'd', 'g', 'j', 'o', 'p', 'yano', 'z' ]);
     });
   });
 
-  xdescribe('forEach (Depth First)', () => {
+  describe('forEach (Depth First)', () => {
     it('should traverse through the values in the correct order (One child)', () => {
       /*!
-       *              5
-       *          1
-       *            2
-       *              3
-       *                4
+       *              j
+       *          a
+       *            b
+       *              c
+       *                d
        */
-      tree.insert(1);
-      tree.insert(2);
-      tree.insert(3);
-      tree.insert(4);
-      tree.getValuesDepthFirst().should.eql([5, 1, 2, 3, 4]);
+      tree.insert('a');
+      tree.insert('b');
+      tree.insert('c');
+      tree.insert('d');
+      tree.getValuesDepthFirst().should.eql(['j', 'a', 'b', 'c', 'd']);
     });
 
     it('should traverse through the values in the correct order (One child)', () => {
       /*!
-       *        5
-       *    3        7
-       * 1    2   6     8
+       *        j
+       *    c        o
+       * a    b   n     p
        */
-      tree.insert(3);
-      tree.insert(7);
-      tree.insert(1);
-      tree.insert(2);
-      tree.insert(6);
-      tree.insert(8);
-      tree.getValuesDepthFirst().should.eql([5, 3, 1, 2, 7, 6, 8]);
+      tree.insert('c');
+      tree.insert('o');
+      tree.insert('a');
+      tree.insert('b');
+      tree.insert('n');
+      tree.insert('p');
+      tree.getValuesDepthFirst().should.eql(['j', 'c', 'a', 'b', 'o', 'n', 'p']);
     });
   });
 
-  xdescribe('forEach (Breadth First)', ()  => {
+  describe('forEach (Breadth First)', ()  => {
     it('should traverse through values breadth first', () => {
       /*!
-       *                 5
-       *         3                7
-       *     1       4       6         8
-       *  0
+       *                 j
+       *         c                p
+       *     b       d       o         q
+       *  a
        */
-      tree.insert(3);
-      tree.insert(4);
-      tree.insert(1);
-      tree.insert(0);
+      tree.insert('c');
+      tree.insert('d');
+      tree.insert('b');
+      tree.insert('a');
 
-      tree.insert(7);
-      tree.insert(6);
-      tree.insert(8);
+      tree.insert('p');
+      tree.insert('o');
+      tree.insert('q');
 
       var values = [];
       tree.forEachBreadthFirst((value) => {
         values.push(value);
       });
-      values.should.eql([5, 3, 7, 1, 4, 6, 8, 0]);
+      values.should.eql(['j', 'c', 'p', 'b', 'd', 'o', 'q', 'a']);
     });
   });
 
-  xdescribe('getMaxDepth', () => {
+  describe('getMaxDepth', () => {
     it('should get the max depth on a 2 node tree', () => {
-      tree.insert(4);
+      tree.insert('a');
       tree.getMaxDepth().should.equal(2);
     });
 
     it('should get the max depth on a 5 node tree', () => {
-      tree.insert(1);
-      tree.insert(2);
-      tree.insert(3);
-      tree.insert(4);
+      tree.insert('a');
+      tree.insert('b');
+      tree.insert('c');
+      tree.insert('d');
       tree.getMinDepth().should.equal(1);
       tree.getMaxDepth().should.equal(5);
     });
 
   });
 
-  xdescribe('getMinDepth', ()  => {
+  describe('getMinDepth', ()  => {
     it('should get the min depth for a 1 node tree', () => {
       tree.getMinDepth().should.equal(1);
     });
 
     it('should get the min depth for a 7 node tree', () => {
-      tree.insert(3);
-      tree.insert(4);
-      tree.insert(1);
+      tree.insert('c');
+      tree.insert('d');
+      tree.insert('b');
+      tree.insert('a');
 
-      tree.insert(7);
-      tree.insert(6);
-      tree.insert(8);
-      tree.insert(9);
+      tree.insert('p');
+      tree.insert('o');
+      tree.insert('q');
       tree.getMinDepth().should.equal(3);
     });
 
     it('should get the min depth on a 5 node tree', () => {
-      tree.insert(1);
-      tree.insert(2);
-      tree.insert(3);
-      tree.insert(4);
+      tree.insert('a');
+      tree.insert('b');
+      tree.insert('c');
+      tree.insert('d');
       tree.getMinDepth().should.equal(1);
     });
   });
 
-  xdescribe('Remove', ()  => {
+  describe('Remove', ()  => {
     it('should remove values with no children', () => {
-      tree.insert(4);
-      tree.insert(6);
-      tree.remove(4);
-      tree.getValues().should.eql([5, 6]);
+      tree.insert('a');
+      tree.insert('b');
+      tree.remove('a');
+      tree.getValues().should.eql(['b', 'j']);
     });
 
     it('should remove values with 1 child', () => {
-      tree.insert(4);
-      tree.insert(2);
-      tree.insert(6);
-      tree.remove(4);
-      tree.getValues().should.eql([2, 5, 6]);
+      tree.insert('a');
+      tree.insert('b');
+      tree.insert('c');
+      tree.remove('a');
+      tree.getValues().should.eql(['b', 'c', 'j']);
     });
 
     it('should remove values with 2 children', () => {
-      /*            5
-       *      3         6
-       *   2    4
+      /*            j
+       *      b         o
+       *   a    c
        */
-      tree.insert(3);
-      tree.insert(4);
-      tree.insert(2);
-      tree.insert(6);
-      tree.remove(3);
-      tree.getValues().should.eql([2, 4, 5, 6]);
+      tree.insert('b');
+      tree.insert('a');
+      tree.insert('c');
+      tree.insert('o');
+      tree.remove('b');
+      tree.getValues().should.eql(['a', 'c', 'j', 'o']);
     });
 
     it('should remove values with 2 children and sub children', () => {
-      /*           5
-       *      1         6
-       *   -1    3
-       *       2  4
+      /*           j
+       *      b         o
+       *   a     d
+       *       c    f
        */
-      tree.insert(1);
-      tree.insert(6);
-      tree.insert(-1);
-      tree.insert(3);
-      tree.insert(2);
-      tree.insert(4);
-      tree.remove(1);
-      tree.getValues().should.eql([-1, 2, 3, 4, 5, 6]);
+      tree.insert('b');
+      tree.insert('o');
+      tree.insert('a');
+      tree.insert('d');
+      tree.insert('c');
+      tree.insert('f');
+      tree.remove('b');
+      tree.getValues().should.eql(['a', 'c', 'd', 'f', 'j', 'o']);
     });
 
     it('should remove the parent node', () => {
-      tree.insert(4);
-      tree.insert(6);
-      tree.remove(5);
-      tree.getValues().should.eql([4, 6]);
+      tree.insert('a');
+      tree.insert('z');
+      tree.remove('j');
+      tree.getValues().should.eql(['a', 'z']);
     });
 
     it('should remove values with 3 children and sub children', () => {
-      /*           5
-       *      1                 9
-       *                 7             11
-       *              6    8        10    12
+      /*           j
+       *      a                 o
+       *                 m             q
+       *              l    n        p     r
        */
-      tree.insert(1);
-      tree.insert(9);
-      tree.insert(7);
-      tree.insert(6);
-      tree.insert(8);
-      tree.insert(11);
-      tree.insert(10);
-      tree.insert(12);
+      tree.insert('a');
+      tree.insert('o');
+      tree.insert('m');
+      tree.insert('q');
+      tree.insert('l');
+      tree.insert('n');
+      tree.insert('p');
+      tree.insert('r');
 
-      tree.remove(9);
-      tree.getValues().should.eql([1, 5, 6, 7, 8, 10, 11, 12]);
+      tree.remove('o');
+      tree.getValues().should.eql(['a', 'j', 'l', 'm', 'n', 'p', 'q', 'r']);
     });
   });
 
-  xdescribe('Rebalancing', ()  => {
+  describe('Rebalancing', ()  => {
 
     beforeEach(() => {
       // Enable automatic rebalancing
-      tree = new BinarySearchStringTree(5);
+      tree = new BinarySearchStringTree('j');
     });
 
     it('should have all the same values after rebalancing', () => {
-      tree.insert(4);
-      tree.insert(3);
-      tree.insert(2);
-      tree.insert(1);
+      tree.insert('e');
+      tree.insert('d');
+      tree.insert('b');
+      tree.insert('a');
       tree._rebalance(); // Force rebalance. Private method. This might change.
-      tree.getValues().should.eql([1, 2, 3, 4, 5]);
+      tree.getValues().should.eql(['a', 'b', 'd', 'e', 'j']);
     });
 
     it('should rebalance itself if maxDepth is 2x the minDepth', () => {
-      tree.insert(4);
-      tree.insert(6);
-      tree.insert(3); // Rebalance (4, 3, 5)
-      tree.insert(2);
-      tree.insert(1);
-      tree.insert(5);
-      tree.insert(7);
+      tree.insert('d');
+      tree.insert('f');
+      tree.insert('c'); // Rebalance (c, d, f, d)
+      tree.insert('b');
+      tree.insert('a');
+      tree.insert('e');
       /*!
-       *        4
-       *    2       6
-       *  1   3   5   7
+       *        d
+       *    b       f
+       *  a   c   e   j
        */
-      tree.getValuesDepthFirst().should.eql([4, 2, 1, 3, 6, 5, 7]);
+      tree.getValuesDepthFirst().should.eql(['d', 'b', 'a', 'c', 'f', 'e', 'j']);
     });
 
   });
