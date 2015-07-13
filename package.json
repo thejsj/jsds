@@ -1,16 +1,17 @@
 {
   "name": "jsds",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --reporter=spec --compilers js:babel/register test"
+    "test": "./node_modules/mocha/bin/mocha --reporter=spec --compilers js:babel/register test",
+    "trie": "./node_modules/mocha/bin/mocha --reporter=spec --compilers js:babel/register test/trie"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "taser": "^1.0.0"
   },
