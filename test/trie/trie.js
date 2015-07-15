@@ -83,11 +83,9 @@ describe('Trie', () => {
       trie.insert('dad');
       trie.insert('bad');
       trie.insert('baby');
-      //console.log(JSON.stringify(trie.node, null, '  '));
       trie.node.value.should.equal('b');
       trie.node.child.value.should.equal('a');
       trie.node.child.child.value.should.equal('b');
-      // Fails here
       trie.node.child.child.child.value.should.equal('y');
       trie.node.next.value.should.equal('d');
       trie.node.next.child.value.should.equal('a');
