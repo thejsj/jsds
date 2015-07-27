@@ -8,7 +8,7 @@ describe('Trie', ()  => {
   require('./trie');
 });
 
-describe('Sorts', ()  => {
-  require('./sorts');
-});
+//describe('Sorts', ()  => {
+  //require('./sorts');
+//});
 

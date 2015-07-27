@@ -107,7 +107,7 @@ describe('Trie', () => {
 
     it('should correctly check if the trie contains a two values', () => {
       trie.insert('ab');
-      trie.contains('a').should.equal(true);
+      trie.contains('a').should.equal(false);
       trie.contains('ab').should.equal(true);
       trie.contains('ad').should.equal(false);
       trie.contains('abd').should.equal(false);
@@ -123,7 +123,7 @@ describe('Trie', () => {
       trie.contains('boxa').should.equal(false);
       trie.contains('dance').should.equal(true);
       trie.contains('dancy').should.equal(false);
-      trie.contains('danc').should.equal(true);
+      trie.contains('danc').should.equal(false);
     });
 
   });
@@ -131,7 +131,13 @@ describe('Trie', () => {
   describe('Remove', () => {
 
     it('should remove values from the trie', () => {
-
+      trie.insert('dance');
+      trie.insert('danish');
+      trie.insert('dan');
+      trie.remove('dan');
+      trie.contains('dance').should.equal(true);
+      trie.contains('danish').should.equal(true);
+      trie.contains('dan').should.equal(false);
     });
 
   });
