@@ -140,6 +140,14 @@ describe('Trie', () => {
       trie.contains('dan').should.equal(false);
     });
 
+    it('should remove nodes from the trie if there are no children', () => {
+      trie.insert('dance');
+      trie.insert('dan');
+      trie.remove('dance');
+      trie.contains('dance').should.equal(false);
+      trie.contains('dan').should.equal(true);
+    });
+
   });
 
 });

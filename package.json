@@ -13,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^3.10.1",
     "taser": "^1.0.0"
   },
   "devDependencies": {
