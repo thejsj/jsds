@@ -138,6 +138,10 @@ describe('Trie', () => {
       trie.contains('dance').should.equal(true);
       trie.contains('danish').should.equal(true);
       trie.contains('dan').should.equal(false);
+      trie.remove('danish');
+      trie.contains('dance').should.equal(true);
+      trie.contains('danish').should.equal(false);
+      trie.contains('dan').should.equal(false);
     });
 
     it('should remove nodes from the trie if there are no children', () => {
@@ -146,6 +150,44 @@ describe('Trie', () => {
       trie.remove('dance');
       trie.contains('dance').should.equal(false);
       trie.contains('dan').should.equal(true);
+    });
+
+    it('should not remove nodes from the trie if there are siblings', () => {
+      trie.insert('abcd');
+      trie.insert('acdf');
+      trie.insert('ad');
+      trie.insert('aefg');
+      trie.remove('abcd'); // Remove!
+      trie.contains('abcd').should.equal(false);
+      trie.contains('acdf').should.equal(true);
+      trie.contains('ad').should.equal(true);
+      trie.contains('aefg').should.equal(true);
+      trie.remove('ad'); // Remove!
+      trie.contains('abcd').should.equal(false);
+      trie.contains('acdf').should.equal(true);
+      trie.contains('ad').should.equal(false);
+      trie.contains('aefg').should.equal(true);
+      trie.remove('acdf'); // Remove!
+      trie.contains('abcd').should.equal(false);
+      trie.contains('acdf').should.equal(false);
+      trie.contains('ad').should.equal(false);
+      trie.contains('aefg').should.equal(true);
+    });
+
+  });
+
+  describe('Iterator', () => {
+
+    it('should iterate over all words in alphabetical order', () => {
+      let words = ['abc', 'def', 'ab', 'abcde', 'defgab'];
+      words.forEach((word) => {
+        trie.insert(word);
+      });
+      let wordsOutput = [];
+      for (let word of trie) {
+        wordsOutput.push(word);
+      }
+      wordsOutput.sort().should.eql(words.sort());
     });
 
   });
