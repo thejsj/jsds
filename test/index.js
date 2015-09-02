@@ -8,6 +8,10 @@ describe('Trie', ()  => {
   require('./trie');
 });
 
+describe('Graph', ()  => {
+  require('./graph');
+});
+
 //describe('Sorts', ()  => {
   //require('./sorts');
 //});
