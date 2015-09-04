@@ -13,10 +13,10 @@
 ### Graphs
 
 - [ ] Graph
-- [ ] Adjacency list
-- [ ] Adjacency Matrix
-- [ ] Incidence List
-- [ ] Dijkstra's Algorithm
+  - [ ] Adjacency list vs Adjacency Matrix vs Incidence List
+  - [ ] Directed vs. Indirected graph
+  - [ ] Shortest Path
+    - [ ] Dijkstra's Algorithm
 
 ### Hashes
 
