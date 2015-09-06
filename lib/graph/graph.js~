@@ -91,12 +91,6 @@ const Graph = class Graph  {
     throw new Error('Node with key `' + key + '` does not exist');
   }
 
-  /*!
-   * Check if there is a node with the specified key
-   *
-   * @param {String}
-   * @returns {Boolean}
-   */
   containsNode (key) {
     isString(key);
     return Object.keys(this[_nodes_]).includes(key);

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --reporter=spec --compilers js:babel/register test",
+    "watch": "fswatch -o -0 ./ | xargs -0 -n1 -I{} npm test",
     "trie": "./node_modules/mocha/bin/mocha --reporter=spec --compilers js:babel/register test/trie"
   },
   "author": "",
