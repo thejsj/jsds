@@ -2,7 +2,7 @@
 import Graph from '../../lib/graph/graph';
 import should from 'should';
 
-describe.only('Graph', () => {
+describe('Graph', () => {
 
   let graph;
   beforeEach(() => {
@@ -128,6 +128,18 @@ describe.only('Graph', () => {
         graph.haveEdge('5', '1').should.equal(false);
       });
 
+      it('should not be able to add an edge to itself', () => {
+        graph.addNode('1', 1);
+        graph.addEdge.bind(graph, '1', '1').should.throw();
+      });
+      
+      it('should not be able to add an edge to if an edge already exists', () => {
+        graph.addNode('1', 1);
+        graph.addNode('2', 1);
+        graph.addEdge('1', '2');
+        graph.addEdge.bind(graph, '1', '2').should.throw();
+      });
+
     });
 
     describe('removeEdge', () => {
@@ -223,6 +235,83 @@ describe.only('Graph', () => {
 
 
   describe('Iterators', () => {
+
+    describe('[Symbols.iterator]', () => {
+
+      it('should iterate over all key/value pairs', () => {
+        graph.addNode('1', 1);
+        graph.addNode('2', 1, '1');
+        graph.addNode('3', 1, '2');
+        graph.addNode('4', 1);
+        let values = [];
+        for (let val of graph) {
+          values.push(val);
+        }
+        values.sort().should.eql([['1', 1], ['2', 1], ['3', 1], ['4', 1]].sort());
+      });
+
+    });
+
+    describe('values', () => {
+
+      it('should iterate over all key/value pairs', () => {
+        graph.addNode('1', 2);
+        graph.addNode('2', 4, '1');
+        graph.addNode('3', 6, '2');
+        graph.addNode('4', 8);
+        let values = [];
+        for (let val of graph.values()) {
+          values.push(val);
+        }
+        values.sort().should.eql([2, 4, 6, 8].sort());
+      });
+
+      it('should iterate over all adjacent nodes when given a node', () => {
+        graph.addNode('1', 2);
+        graph.addNode('2', 4, '1');
+        graph.addNode('3', 6, '2');
+        graph.addNode('4', 8);
+        graph.addNode('5', 10, '4');
+        graph.addNode('6', 12, '3');
+        let values = [];
+        for (let val of graph.values('1')) {
+          values.push(val);
+        }
+        values.sort().should.eql([2, 4, 6, 12].sort());
+      });
+
+    });
+
+    describe('values', () => {
+
+      it('should iterate over all key/value pairs', () => {
+        graph.addNode('1', 2);
+        graph.addNode('2', 4, '1');
+        graph.addNode('3', 6, '2');
+        graph.addNode('4', 8);
+        let keys = [];
+        for (let val of graph.keys()) {
+          keys.push(val);
+        }
+        keys.sort().should.eql(['1', '2', '3', '4'].sort());
+      });
+
+      it('should iterate over all adjacent nodes when given a node', () => {
+        graph.addNode('1', 2);
+        graph.addNode('2', 4, '1');
+        graph.addNode('3', 6, '2');
+        graph.addNode('4', 8);
+        graph.addNode('5', 10, '4');
+        graph.addNode('6', 12, '3');
+        let keys = [];
+        for (let val of graph.keys('1')) {
+          keys.push(val);
+        }
+        keys.sort().should.eql(['1', '2', '3', '6'].sort());
+      });
+
+    });
+
 
   });
 
