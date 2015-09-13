@@ -12,11 +12,11 @@
 
 ### Graphs
 
-- [ ] Graph
-  - [ ] Adjacency list vs Adjacency Matrix vs Incidence List
-  - [ ] Directed vs. Indirected graph
-  - [ ] Shortest Path
-    - [ ] Dijkstra's Algorithm
+- [x] Undirected Graph with Adjacency List
+- [ ] Directed Graph with Adjacency List
+- [ ] Shortest Path
+  - [ ] Dijkstra's Algorithm
+- [ ] Incidence List, Adjacency Matrix
 
 ### Hashes
 
