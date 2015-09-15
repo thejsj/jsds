@@ -12,7 +12,11 @@ describe('Graph', ()  => {
   require('./graph');
 });
 
-//describe('Sorts', ()  => {
-  //require('./sorts');
-//});
+describe('Linked List', ()  => {
+  require('./linked-list');
+});
+
+describe('Queue', ()  => {
+  require('./queue');
+});
 
