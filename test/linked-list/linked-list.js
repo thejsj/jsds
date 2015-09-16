@@ -14,8 +14,10 @@ describe.only('LinkedList', () => {
     it('should insert items', () => {
       linkedList.insert('1');
       linkedList.insert('2');
+      linkedList.insert('3');
       linkedList.get(0).should.equal('1');
       linkedList.get(1).should.equal('2');
+      linkedList.get(2).should.equal('3');
     });
 
     it('should insert items at a specified index', () => {
@@ -112,16 +114,32 @@ describe.only('LinkedList', () => {
       linkedList.length().should.equal(1);
       linkedList.insert('2');
       linkedList.length().should.equal(2);
-      // linkedList.remove(0);
-      // linkedList.length().should.equal(1);
-      // linkedList.remove(0);
-      // linkedList.length().should.equal(0);
+      linkedList.remove(0);
+      linkedList.length().should.equal(1);
+      linkedList.remove(0);
+      linkedList.length().should.equal(0);
     });
 
   });
 
 
   describe('contains', () => {
+
+    it('should check if a value is contained', () => {
+      var arr = [1, 2, 3];
+      var obj = { hello : 'world' };
+      linkedList.insert('1');
+      linkedList.insert(2);
+      linkedList.insert(arr);
+      linkedList.insert(obj);
+      linkedList.contains('1').should.equal(true);
+      linkedList.contains(1).should.equal(false);
+      linkedList.contains(2).should.equal(true);
+      linkedList.contains('2').should.equal(false);
+      linkedList.contains(arr).should.equal(true);
+      linkedList.contains(obj).should.equal(true);
+      linkedList.contains({ hello: 'world' }).should.equal(false);
+    });
 
   });
 
