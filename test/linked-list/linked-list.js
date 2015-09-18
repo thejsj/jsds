@@ -145,6 +145,16 @@ describe.only('LinkedList', () => {
 
   describe('find', () => {
 
+    it('should find entries', () => {
+      var arr = [1, 2, 3];
+      var obj = { hello : 'world' };
+      linkedList.insert('1');
+      linkedList.insert(2);
+      linkedList.insert(arr);
+      linkedList.insert(obj);
+      linkedList.find(val => typeof val === 'string').should.equal('1');
+      linkedList.find(val => val > 1).should.equal(2);
+    });
   });
 
   describe('[Symbol.iterator]', () => {
