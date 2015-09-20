@@ -2,7 +2,7 @@
 import LinkedList from '../../lib/linked-list/linked-list.js';
 import should from 'should';
 
-describe.only('LinkedList', () => {
+describe('LinkedList', () => {
 
   let linkedList;
   beforeEach(() => {
@@ -91,7 +91,7 @@ describe.only('LinkedList', () => {
       (linkedList.get(0) === undefined).should.equal(true);
     });
 
-    it('should should throw an error if trying to remove a non-existing node', () => {
+    it('should throw an error if trying to remove a non-existing node', () => {
       linkedList.insert('1');
       linkedList.get(0).should.equal('1');
       linkedList.insert('2');
@@ -102,6 +102,24 @@ describe.only('LinkedList', () => {
       linkedList.get(1).should.equal('2');
       linkedList.get(2).should.equal('3');
       linkedList.remove(2);
+      linkedList.remove.bind(linkedList, 2).should.throw();
+    });
+
+    it('should remove elements at the correct index', () => {
+      linkedList.insert('1');
+      linkedList.get(0).should.equal('1');
+      linkedList.insert('2');
+      linkedList.get(0).should.equal('1');
+      linkedList.get(1).should.equal('2');
+      linkedList.insert('3');
+      linkedList.get(0).should.equal('1');
+      linkedList.get(1).should.equal('2');
+      linkedList.get(2).should.equal('3');
+      linkedList.remove(1);
+      linkedList.get(0).should.equal('1');
+      linkedList.get(1).should.equal('3');
+      linkedList.remove(0);
+      linkedList.get(0).should.equal('3');
     });
 
   });
@@ -155,9 +173,69 @@ describe.only('LinkedList', () => {
       linkedList.find(val => typeof val === 'string').should.equal('1');
       linkedList.find(val => val > 1).should.equal(2);
     });
+
+    it('should return `undefined` if nothing is found', () => {
+      linkedList.insert('1');
+      linkedList.insert('2');
+      (undefined === linkedList.find(val => typeof val === 'string')).should.equal(false);
+      (undefined === linkedList.find(val => typeof val === 'number')).should.equal(true);
+    });
   });
 
-  describe('[Symbol.iterator]', () => {
+  describe('Iterators', () => {
+
+    describe('entries', () => {
+
+      it('should get all entries', () => {
+        linkedList.insert(0);
+        linkedList.insert(2);
+        linkedList.insert(4);
+        linkedList.insert(6);
+        linkedList.insert(8);
+        linkedList.remove();
+        [...linkedList].should.eql([[0,0], [1,2], [2,4], [3,6]]);
+        [...linkedList.entries()].should.eql([[0,0], [1,2], [2,4], [3,6]]);
+      });
+
+      it('should give back an empty array if there are no entries', () => {
+        [...linkedList].should.eql([]);
+      });
+
+    });
+
+    describe('keys', () => {
+
+      it('should get all entries', () => {
+        linkedList.insert(0);
+        linkedList.insert(2);
+        linkedList.insert(4);
+        linkedList.insert(6);
+        linkedList.insert(8);
+        [...linkedList.keys()].should.eql([0, 1, 2, 3, 4]);
+        linkedList.remove();
+        [...linkedList.keys()].should.eql([0, 1, 2, 3]);
+        linkedList.insert(10);
+        [...linkedList.keys()].should.eql([0, 1, 2, 3, 4]);
+      });
+
+    });
+
+    describe('values', () => {
+
+      it('should get all entries', () => {
+        linkedList.insert(0);
+        linkedList.insert(2);
+        linkedList.insert(4);
+        linkedList.insert(6);
+        linkedList.insert(8);
+        [...linkedList.values()].should.eql([0, 2, 4, 6, 8]);
+        linkedList.remove();
+        [...linkedList.values()].should.eql([0, 2, 4, 6]);
+        linkedList.insert(10);
+        [...linkedList.values()].should.eql([0, 2, 4, 6, 10]);
+      });
+
+    });
 
   });
 
