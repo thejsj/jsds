@@ -46,6 +46,6 @@
 
 ### Lists
 
-- [ ] Linked List
+- [x] Linked List
 - [ ] Doubly-Linked List
 - [ ] Skip List
