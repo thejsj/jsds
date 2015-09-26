@@ -33,7 +33,7 @@
 
 ### Queue
 
-- [ ] Queue
+- [x] Queue
 - [ ] Priority queue
 - [ ] Priority queue w/ Heap
 - [ ] Double-ended queue
