@@ -40,6 +40,13 @@ describe('LinkedList', () => {
       linkedList.get(2).should.equal('2');
     });
 
+    it('should insert items at the beginning if index 0 is passed', () => {
+      linkedList.insert('1', 0);
+      linkedList.insert('2', 0);
+      linkedList.insert('3', 0);
+      [...linkedList.values()].should.eql(['3', '2', '1']);
+    });
+
   });
 
   describe('get', () => {
