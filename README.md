@@ -38,6 +38,10 @@
 - [ ] Priority queue w/ Heap
 - [ ] Double-ended queue
 
+### Stack 
+
+- [x] Stack
+
 ### Heaps
 
 - [ ] Heap
@@ -47,5 +51,5 @@
 ### Lists
 
 - [x] Linked List
-- [ ] Doubly-Linked List
+- [x] Doubly-Linked List
 - [ ] Skip List

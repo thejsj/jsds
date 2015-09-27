@@ -1,22 +1,10 @@
 /*global describe:true */
 
-describe('Trees', ()  => {
-  require('./tree');
-});
+require('./tree');
+require('./trie');
+require('./graph');
+require('./linked-list');
+require('./queue');
+require('./stack');
 
-describe('Trie', ()  => {
-  require('./trie');
-});
-
-describe('Graph', ()  => {
-  require('./graph');
-});
-
-describe('Linked List', ()  => {
-  require('./linked-list');
-});
-
-describe('Queue', ()  => {
-  require('./queue');
-});
 
