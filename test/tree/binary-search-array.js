@@ -1,15 +1,18 @@
-/*global describe: true, it:true */
+/*global describe: true, it:true, beforeEach: true */
 import should from 'should';
 import BinarySearchArray from '../../lib/tree/binary-search-array';
 
 describe('BinarySearchArray (binary tree implemented with an array)', () => {
 
-  let biTree = new BinarySearchArray();
+  let biTree;
+
+  beforeEach(() => {
+    biTree = new BinarySearchArray();
+  });
 
   describe('Add', () => {
 
     it('should throw an error when trying to add anything that\'s not a number', ()  => {
-      let biTree = new BinarySearchArray();
       biTree.add.bind(biTree, '2').should.throw();
       biTree.add.bind(biTree, [2]).should.throw();
       biTree.add.bind(biTree, { hello: 2 }).should.throw();
@@ -18,27 +21,23 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
     });
 
     it('should add one element to the tree', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.getValues().should.eql([1]);
     });
 
     it('should add two elements to the tree (Second one bigger)', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.add(2);
       biTree.getValues().should.eql([1, 2]);
     });
 
     it('should add two elements to the tree (Second one smaller)', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.add(0);
       biTree.getValues().should.eql([0, 1]);
     });
 
     it('should add elements to the tree', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.add(2);
       biTree.add(3);
@@ -48,7 +47,6 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
     });
 
     it('should return true or false if the element was added to the tree or not', () => {
-      let biTree = new BinarySearchArray();
       let inserted = biTree.add(1);
       let inserted2 = biTree.add(1);
       inserted.should.equal(true);
@@ -60,7 +58,6 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
   describe('Remove', ()  => {
 
     it('should throw an error when trying to remove anything that\'s not a number', ()  => {
-      let biTree = new BinarySearchArray();
       biTree.remove.bind(biTree, '2').should.throw();
       biTree.remove.bind(biTree, [2]).should.throw();
       biTree.remove.bind(biTree, { hello: 2 }).should.throw();
@@ -69,14 +66,12 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
     });
 
     it('should remove one element from the tree', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.remove(1);
       biTree.getValues().should.eql([]);
     });
 
     it('should remove the first element from the tree', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.add(2);
       biTree.remove(1);
@@ -84,7 +79,6 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
     });
 
     it('should remove elements from the tree', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.add(2);
       biTree.add(3);
@@ -96,7 +90,6 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
     });
 
     it('should remove elements from the tree', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(1);
       biTree.add(2);
       biTree.add(3);
@@ -117,7 +110,6 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
   describe('Find', () => {
 
     it('should throw an error when trying to find anything that\'s not a number', ()  => {
-      let biTree = new BinarySearchArray();
       biTree.find.bind(biTree, '2').should.throw();
       biTree.find.bind(biTree, [2]).should.throw();
       biTree.find.bind(biTree, { hello: 2 }).should.throw();
@@ -126,7 +118,6 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
     });
 
     it('should find elements in the tree', () => {
-      let biTree = new BinarySearchArray();
       biTree.add(0.5);
       biTree.add(1);
       biTree.add(1.5);
@@ -143,4 +134,14 @@ describe('BinarySearchArray (binary tree implemented with an array)', () => {
     });
   });
 
+  describe('Iterators', () => {
+
+    it('should get all entries when using the default iterator', () => {
+      biTree.add(0);
+      biTree.add(2);
+      biTree.add(4);
+      [...biTree].should.eql([[0, 0], [1, 2], [2, 4]]);
+    });
+
+  });
 });
