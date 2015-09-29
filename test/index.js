@@ -6,5 +6,6 @@ require('./graph');
 require('./linked-list');
 require('./queue');
 require('./stack');
+require('./heap');
 
 
