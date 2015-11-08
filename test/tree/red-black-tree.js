@@ -26,7 +26,9 @@ describe('RedBlackTree', () => {
   describe.only('Insert', ()  => {
     it('should insert values into the binary tree (3 values)', () => {
       tree.insert(2);
+      tree.validate();
       tree.insert(8);
+      tree.validate();
       tree.getValues().sort().should.eql([5, 2, 8].sort());
     });
 
@@ -37,11 +39,10 @@ describe('RedBlackTree', () => {
       tree.insert(0);
       tree.insert(7);
       tree.insert(100);
-      tree.print();
-      //tree.insert(4);
-      //tree.insert(16);
-      //tree.insert(3);
-      //tree.getValues().sort().should.eql([0, 1, 2, 3, 4, 5, 7, 8, 16, 100].sort());
+      tree.insert(4);
+      tree.insert(16);
+      tree.insert(3);
+      tree.getValues().sort().should.eql([0, 1, 2, 3, 4, 5, 7, 8, 16, 100].sort());
     });
   });
 
