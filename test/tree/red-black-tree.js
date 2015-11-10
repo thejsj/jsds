@@ -221,7 +221,7 @@ describe('RedBlackTree', () => {
     });
   });
 
-  xdescribe('getMaxDepth', () => {
+  describe('getMaxDepth', () => {
     it('should get the max depth on a 2 node tree', () => {
       tree.insert(4);
       tree.getMaxDepth().should.equal(2);
@@ -232,13 +232,13 @@ describe('RedBlackTree', () => {
       tree.insert(2);
       tree.insert(3);
       tree.insert(4);
-      tree.getMinDepth().should.equal(1);
-      tree.getMaxDepth().should.equal(5);
+      tree.getMinDepth().should.equal(2);
+      tree.getMaxDepth().should.equal(3);
     });
 
   });
 
-  xdescribe('getMinDepth', ()  => {
+  describe('getMinDepth', ()  => {
     it('should get the min depth for a 1 node tree', () => {
       tree.getMinDepth().should.equal(1);
     });
@@ -252,7 +252,7 @@ describe('RedBlackTree', () => {
       tree.insert(6);
       tree.insert(8);
       tree.insert(9);
-      tree.getMinDepth().should.equal(3);
+      tree.getMinDepth().should.equal(2);
     });
 
     it('should get the min depth on a 5 node tree', () => {
@@ -260,7 +260,7 @@ describe('RedBlackTree', () => {
       tree.insert(2);
       tree.insert(3);
       tree.insert(4);
-      tree.getMinDepth().should.equal(1);
+      tree.getMinDepth().should.equal(2);
     });
   });
 
@@ -336,7 +336,7 @@ describe('RedBlackTree', () => {
     });
   });
 
-  xdescribe('Rebalancing', ()  => {
+  describe('Rebalancing', ()  => {
 
     beforeEach(() => {
       // Enable automatic rebalancing
@@ -348,24 +348,24 @@ describe('RedBlackTree', () => {
       tree.insert(3);
       tree.insert(2);
       tree.insert(1);
-      tree._rebalance(); // Force rebalance. Private method. This might change.
       tree.getValues().should.eql([1, 2, 3, 4, 5]);
     });
 
     it('should rebalance itself if maxDepth is 2x the minDepth', () => {
       tree.insert(4);
       tree.insert(6);
-      tree.insert(3); // Rebalance (4, 3, 5)
+      tree.insert(3);
       tree.insert(2);
       tree.insert(1);
       tree.insert(5);
       tree.insert(7);
       /*!
-       *        4
-       *    2       6
-       *  1   3   5   7
+       *         5
+       *     3       6
+       *   2   4       7
+       * 1
        */
-      tree.getValuesDepthFirst().should.eql([4, 2, 1, 3, 6, 5, 7]);
+      tree.getValuesDepthFirst().should.eql([5, 3, 2, 1, 4, 6, 7]);
     });
 
   });
