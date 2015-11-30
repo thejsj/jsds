@@ -304,7 +304,7 @@ describe('RedBlackTree', () => {
       tree.getValues().should.eql([2, 4, 5, 6]);
     });
 
-    xit('should remove values with 2 children and sub children', () => {
+    it('should remove values with 2 children and sub children', () => {
       /*           5
        *      1         6
        *   -1    3
@@ -322,7 +322,7 @@ describe('RedBlackTree', () => {
       tree.getValues().should.eql([-1, 2, 3, 4, 5, 6]);
     });
 
-    xit('should remove the parent node', () => {
+    it('should remove the parent node', () => {
       tree.insert(4);
       tree.insert(6);
       tree.validate().should.equal(true);
@@ -331,7 +331,7 @@ describe('RedBlackTree', () => {
       tree.getValues().should.eql([4, 6]);
     });
 
-    xit('should remove values with 3 children and sub children', () => {
+    it('should remove values with 3 children and sub children', () => {
       /*           5
        *      1                 9
        *                 7             11
