@@ -304,7 +304,7 @@ describe('RedBlackTree', () => {
       tree.getValues().should.eql([2, 4, 5, 6]);
     });
 
-    xit('should remove values with 2 children and sub children', () => {
+    it('should remove values with 2 children and sub children', () => {
       /*           5
        *      1         6
        *   -1    3
