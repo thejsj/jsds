@@ -1,4 +1,4 @@
-/*global describe: true, it:true, beforeEach:true, xdescribe:true */
+/*global describe: true, it:true, beforeEach:true, xdescribe:true, xit: true */
 /*jshint -W030 */
 import should from 'should';
 import RedBlackTree from '../../lib/tree/red-black-tree';
@@ -265,11 +265,18 @@ describe('RedBlackTree', () => {
   });
 
   describe.only('Remove', ()  => {
+    it('should remove values in a tree with one children', () => {
+      tree.insert(4);
+      tree.remove(4);
+      tree.validate().should.equal(true);
+      tree.getValues().should.eql([5]);
+    });
+
     it('should remove values with no children', () => {
       tree.insert(4);
       tree.insert(6);
       tree.remove(4);
-      tree.validate();
+      tree.validate().should.equal(true);
       tree.getValues().should.eql([5, 6]);
     });
 
@@ -277,11 +284,12 @@ describe('RedBlackTree', () => {
       tree.insert(4);
       tree.insert(2);
       tree.insert(6);
-      tree.validate();
+      tree.remove(4);
+      tree.validate().should.equal(true);
       tree.getValues().should.eql([2, 5, 6]);
     });
 
-    xit('should remove values with 2 children', () => {
+    it('should remove values with 2 children', () => {
       /*            5
        *      3         6
        *   2    4
@@ -290,7 +298,9 @@ describe('RedBlackTree', () => {
       tree.insert(4);
       tree.insert(2);
       tree.insert(6);
+      tree.validate().should.equal(true);
       tree.remove(3);
+      tree.validate().should.equal(true);
       tree.getValues().should.eql([2, 4, 5, 6]);
     });
 
@@ -306,14 +316,18 @@ describe('RedBlackTree', () => {
       tree.insert(3);
       tree.insert(2);
       tree.insert(4);
+      tree.validate().should.equal(true);
       tree.remove(1);
+      tree.validate().should.equal(true);
       tree.getValues().should.eql([-1, 2, 3, 4, 5, 6]);
     });
 
     xit('should remove the parent node', () => {
       tree.insert(4);
       tree.insert(6);
+      tree.validate().should.equal(true);
       tree.remove(5);
+      tree.validate().should.equal(true);
       tree.getValues().should.eql([4, 6]);
     });
 
@@ -332,41 +346,35 @@ describe('RedBlackTree', () => {
       tree.insert(10);
       tree.insert(12);
 
+      tree.validate().should.equal(true);
       tree.remove(9);
+      tree.validate().should.equal(true);
       tree.getValues().should.eql([1, 5, 6, 7, 8, 10, 11, 12]);
     });
-  });
 
-  describe('Rebalancing', ()  => {
-
-    beforeEach(() => {
-      // Enable automatic rebalancing
-      tree = new RedBlackTree(5);
+    xit('should insert and remove ordered values and always be valid', () => {
+      let numbers = [];
+      for (let i = 0; i < 500; i += 1) {
+        numbers.push(i);
+        tree.insert(i);
+        tree.validate().should.equal(true);
+      }
+      tree.getValues().should.eql(numbers.sort((a, b) => a - b));
+      for (let i = 0; i < 500; i += 1) {
+        tree.remove(i);
+        tree.validate().should.equal(true);
+      }
+      tree.getValues().should.eql([]);
     });
 
-    it('should have all the same values after rebalancing', () => {
-      tree.insert(4);
-      tree.insert(3);
-      tree.insert(2);
-      tree.insert(1);
-      tree.getValues().should.eql([1, 2, 3, 4, 5]);
-    });
-
-    it('should rebalance itself if maxDepth is 2x the minDepth', () => {
-      tree.insert(4);
-      tree.insert(6);
-      tree.insert(3);
-      tree.insert(2);
-      tree.insert(1);
-      tree.insert(5);
-      tree.insert(7);
-      /*!
-       *         5
-       *     3       6
-       *   2   4       7
-       * 1
-       */
-      tree.getValuesDepthFirst().should.eql([5, 3, 2, 1, 4, 6, 7]);
+    xit('should insert random values and always be valid', () => {
+      let numbers = [5];
+      for (let i = 0; i < 500; i += 1) {
+        numbers.push(Math.random());
+        tree.insert(numbers[numbers.length - 1]);
+        tree.validate().should.equal(true);
+      }
+      tree.getValues().should.eql(numbers.sort((a, b) => a - b));
     });
 
   });
