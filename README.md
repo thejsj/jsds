@@ -4,7 +4,7 @@
 ### Trees
 
 - [x] Binary search tree (self-balancing, non-self-balancing)
-- [ ] Red-black tree (Left-leaning red-black tree)
+- [x] Red-black tree (Left-leaning red-black tree)
 - [ ] Scapegoat tree
 - [ ] AVL tree
 - [ ] Splay Tree
