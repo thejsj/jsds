@@ -262,7 +262,7 @@ describe('RedBlackTree', () => {
     });
   });
 
-  describe.only('Remove', ()  => {
+  describe('Remove', ()  => {
     it('should remove values in a tree with one children', () => {
       tree.insert(4);
       tree.remove(4);
@@ -329,6 +329,15 @@ describe('RedBlackTree', () => {
       tree.getValues().should.eql([4, 6]);
     });
 
+    it('should remove the parent node with 0 and 1', () => {
+      let tree = new RedBlackTree(0, 'black');
+      tree.insert(1);
+      tree.validate().should.equal(true);
+      tree.remove(0);
+      tree.validate().should.equal(true);
+      tree.getValues().should.eql([1]);
+    });
+
     it('should remove values with 3 children and sub children', () => {
       /*           5
        *      1                 9
@@ -361,13 +370,11 @@ describe('RedBlackTree', () => {
           for (let i = 0; i < count; i += 1) {
             numbers.push(i);
             tree.insert(i);
-            tree.print();
             tree.validate().should.equal(true);
           }
           tree.getValues().should.eql(numbers.sort((a, b) => a - b));
           for (let i = 0; i < count; i += 1) {
             tree.remove(i);
-            tree.print();
             tree.validate().should.equal(true);
           }
           tree.getValues().should.eql([]);
@@ -376,8 +383,8 @@ describe('RedBlackTree', () => {
 
       it('should insert and remove 6 ordered values and always be valid', generateOrderValueTest(2));
 
-      xit('should insert random values and always be valid', () => {
-        let numbers = [5];
+      it('should insert random values and always be valid', () => {
+        let numbers = [];
         for (let i = 0; i < 500; i += 1) {
           numbers.push(Math.random());
           tree.insert(numbers[numbers.length - 1]);
