@@ -10,9 +10,7 @@ describe('RedBlackTree', () => {
     return a - b;
   };
 
-  beforeEach(() => {
-    tree = new RedBlackTree(5, 'black');
-  });
+  beforeEach(() => tree = new RedBlackTree(5, 'black'));
 
   describe('Init', ()  => {
     it('should have the relevant methods', () => {
@@ -352,31 +350,43 @@ describe('RedBlackTree', () => {
       tree.getValues().should.eql([1, 5, 6, 7, 8, 10, 11, 12]);
     });
 
-    xit('should insert and remove ordered values and always be valid', () => {
-      let numbers = [];
-      for (let i = 0; i < 500; i += 1) {
-        numbers.push(i);
-        tree.insert(i);
-        tree.validate().should.equal(true);
-      }
-      tree.getValues().should.eql(numbers.sort((a, b) => a - b));
-      for (let i = 0; i < 500; i += 1) {
-        tree.remove(i);
-        tree.validate().should.equal(true);
-      }
-      tree.getValues().should.eql([]);
-    });
 
-    xit('should insert random values and always be valid', () => {
-      let numbers = [5];
-      for (let i = 0; i < 500; i += 1) {
-        numbers.push(Math.random());
-        tree.insert(numbers[numbers.length - 1]);
-        tree.validate().should.equal(true);
-      }
-      tree.getValues().should.eql(numbers.sort((a, b) => a - b));
-    });
+    describe('Automated Tests', () => {
 
+      beforeEach(() => tree = new RedBlackTree());
+
+      let generateOrderValueTest = (count) => {
+        return () => {
+          let numbers = [];
+          for (let i = 0; i < count; i += 1) {
+            numbers.push(i);
+            tree.insert(i);
+            tree.print();
+            tree.validate().should.equal(true);
+          }
+          tree.getValues().should.eql(numbers.sort((a, b) => a - b));
+          for (let i = 0; i < count; i += 1) {
+            tree.remove(i);
+            tree.print();
+            tree.validate().should.equal(true);
+          }
+          tree.getValues().should.eql([]);
+        };
+      };
+
+      it('should insert and remove 6 ordered values and always be valid', generateOrderValueTest(2));
+
+      xit('should insert random values and always be valid', () => {
+        let numbers = [5];
+        for (let i = 0; i < 500; i += 1) {
+          numbers.push(Math.random());
+          tree.insert(numbers[numbers.length - 1]);
+          tree.validate().should.equal(true);
+        }
+        tree.getValues().should.eql(numbers.sort((a, b) => a - b));
+      });
+
+    });
   });
 
 });
