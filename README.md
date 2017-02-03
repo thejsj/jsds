@@ -43,9 +43,9 @@
 
 ### Heaps
 
-- [ ] Binary Heap
+- [x] Binary Heap
   - [x] Binary Min Heap
-  - [ ] Binary Max Heap
+  - [x] Binary Max Heap
 - [ ] Binomial Heap
   - [ ] Binomial Min Heap
   - [ ] Binomial Max Heap
