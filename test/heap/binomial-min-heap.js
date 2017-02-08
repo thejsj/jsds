@@ -96,14 +96,66 @@ describe('Binomail Min Heap', () => {
   })
 
   describe('Merge', () => {
+    it('should merge two simple trees', () => {
+      let tree1 = new BinomialMinHeap(1, 'hello')
+      let tree2 = new BinomialMinHeap(2, 'wow')
+      tree2.merge(tree1)
+      tree2.validate()
+    })
 
+    it('should merge two trees with one child', () => {
+      let tree1 = new BinomialMinHeap(1, 'hello')
+      tree1.insert(5, 'great')
+      let tree2 = new BinomialMinHeap(2, 'wow')
+      tree2.insert(6, 'great')
+      tree2.merge(tree1)
+      tree2.validate()
+    })
+
+    it('should merge thress trees with different children', () => {
+      let tree1 = new BinomialMinHeap(3, 'hello')
+      tree1.insert(5, 'great')
+      tree1.insert(0, 'no')
+      let tree2 = new BinomialMinHeap(2, 'wow')
+      tree2.insert(6, 'great')
+      tree2.insert(1, 'great')
+      let tree3 = new BinomialMinHeap(2, 'wow')
+      tree3.insert(6, 'great')
+      tree3.insert(7, 'great')
+      tree2.merge(tree1)
+      tree2.validate()
+      tree2.merge(tree3)
+      tree2.validate()
+    })
+
+    it('should merge many trees with many children', () => {
+      let tree = new BinomialMinHeap()
+      let keys = []
+      for (let i = 0; i < 10; i += 1) {
+        let newTree = new BinomialMinHeap()
+        for (let ii = 0; ii <= 10; ii += 1) {
+          keys.push(ii)
+          newTree.insert(ii, 'ii-' + ii)
+        }
+        tree.merge(newTree)
+        tree.validate()
+      }
+      expect([...tree.keys()].sort()).to.deep.equal(keys.sort())
+    })
   })
 
-  describe('Decrease Key', () => {
+  /**
+   * This operation does not make much sense under the current API for this
+   * heap because it requires a reference to the tree/node getting decreased
+   * with references to its children and parent, which are all currently hidden
+   * from the user. If the API for this is changed in order to force the `insert`
+   * function to provide a tree and the reference to that tree is kept, then
+   * this operation would be possible in O(log n)
+   */
+  xdescribe('Decrease Key', () => {})
 
-  })
-
-  describe('Delete', () => {
-
-  })
+  /**
+   * This operation depends on the 'decrease key' method
+   */
+  describe('Delete', () => {})
 })
