@@ -1,6 +1,7 @@
 // import 'should'
 const expect = require('chai').expect
 const BinomialMinHeap = require('../../lib/heap/binomial-min-heap')
+const BinomialHeapTree = require('../../lib/heap/binomial-min-heap').BinomialHeapTree
 
 describe('Binomail Min Heap', () => {
   let tree
@@ -27,6 +28,27 @@ describe('Binomail Min Heap', () => {
         let n = Math.random() * 100
         nums.push(n)
         tree.insert(n, 'wow')
+        expect(tree.validate()).to.equal(true)
+      }
+      expect([...tree.keys()].sort()).to.deep.equal(nums.sort())
+    })
+  })
+
+  describe('InsertTree', () => {
+    it('should insert two key/value pairs', () => {
+      let subTree = new BinomialHeapTree(30, 'wow')
+      tree.insertTree(subTree)
+      expect(tree.validate()).to.equal(true)
+      expect([...tree.entries()]).to.deep.equal([[20, 'hello'], [30, 'wow']])
+    })
+
+    it('should insert 20 key/value pairs', () => {
+      let nums = [20]
+      for (let i = 0; i < 20; i += 1) {
+        let n = Math.random() * 100
+        nums.push(n)
+        let subTree = new BinomialHeapTree(n, 'wow')
+        tree.insertTree(subTree)
         expect(tree.validate()).to.equal(true)
       }
       expect([...tree.keys()].sort()).to.deep.equal(nums.sort())
