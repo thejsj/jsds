@@ -166,18 +166,39 @@ describe('Binomail Min Heap', () => {
     })
   })
 
-  /**
-   * This operation does not make much sense under the current API for this
-   * heap because it requires a reference to the tree/node getting decreased
-   * with references to its children and parent, which are all currently hidden
-   * from the user. If the API for this is changed in order to force the `insert`
-   * function to provide a tree and the reference to that tree is kept, then
-   * this operation would be possible in O(log n)
-   */
-  xdescribe('Decrease Key', () => {})
+  describe('Decrease Key', () => {
+    it('should insert two key/value pairs and decrase its key', () => {
+      let subTree = new BinomialHeapTree(30, 'wow')
+      tree.insertTree(subTree)
+      expect([...tree.entries()]).to.deep.equal([[20, 'hello'], [30, 'wow']])
+      tree.decreaseChildKey(subTree, 0)
+      expect([...tree.entries()]).to.deep.equal([[0, 'wow'], [20, 'hello']])
+      expect(tree.validate()).to.equal(true)
+      expect(tree.findMin()).to.deep.equal([0, 'wow'])
+    })
 
-  /**
-   * This operation depends on the 'decrease key' method
-   */
-  describe('Delete', () => {})
+    it('should insert 20 key/value pairs', () => {
+      let nums = [20]
+      for (let i = 0; i < 20; i += 1) {
+        let n = Math.random() * 100
+        nums.push(n)
+        let subTree = new BinomialHeapTree(n, 'wow')
+        tree.insertTree(subTree)
+        expect(tree.validate()).to.equal(true)
+      }
+      expect([...tree.keys()].sort()).to.deep.equal(nums.sort())
+      expect(tree.findMin()).to.deep.equal([Math.min.apply(null, nums), 'wow'])
+    })
+  })
+
+  describe('Delete', () => {
+    it('should delete a key/value pair', () => {
+      let subTree = new BinomialHeapTree(30, 'wow')
+      tree.insertTree(subTree)
+      expect([...tree.entries()]).to.deep.equal([[20, 'hello'], [30, 'wow']])
+      expect(tree.validate()).to.equal(true)
+      tree.deleteChild(subTree)
+      expect([...tree.entries()]).to.deep.equal([[20, 'hello']])
+    })
+  })
 })
