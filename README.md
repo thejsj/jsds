@@ -4,7 +4,7 @@
 ### Trees
 
 - [x] Binary search tree (self-balancing, non-self-balancing)
-- [ ] Red-black tree (Left-leaning red-black tree)
+- [x] Red-black tree (Left-leaning red-black tree)
 - [ ] Scapegoat tree
 - [ ] AVL tree
 - [ ] Splay Tree
@@ -43,12 +43,12 @@
 
 ### Heaps
 
-- [ ] Binary Heap
+- [x] Binary Heap
   - [x] Binary Min Heap
-  - [ ] Binary Max Heap
-- [ ] Binomial Heap
-  - [ ] Binomial Min Heap
-  - [ ] Binomial Max Heap
+  - [x] Binary Max Heap
+- [x] Binomial Heap
+  - [x] Binomial Min Heap
+  - [x] Binomial Max Heap
 - [ ] Fibonacci Heap
   - [ ] Fibonacci Min Heap
   - [ ] Fibnoacci Max Heap

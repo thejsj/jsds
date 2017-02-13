@@ -17,10 +17,23 @@
     "lodash": "^3.10.1",
     "taser": "^1.0.0"
   },
+  "standard": {
+    "globals": [
+      "describe",
+      "xdescribe",
+      "it",
+      "xit",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
+    ]
+  },
   "devDependencies": {
     "babel": "^5.6.14",
     "exectimer": "^1.0.2",
     "mocha": "^2.2.5",
-    "should": "^7.0.1"
+    "should": "^7.0.1",
+    "standard": "^8.6.0"
   }
 }
