@@ -46,9 +46,9 @@
 - [x] Binary Heap
   - [x] Binary Min Heap
   - [x] Binary Max Heap
-- [ ] Binomial Heap
-  - [ ] Binomial Min Heap
-  - [ ] Binomial Max Heap
+- [x] Binomial Heap
+  - [x] Binomial Min Heap
+  - [x] Binomial Max Heap
 - [ ] Fibonacci Heap
   - [ ] Fibonacci Min Heap
   - [ ] Fibnoacci Max Heap
