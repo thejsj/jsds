@@ -247,14 +247,33 @@ describe('Graph', () => {
         graph.addNode('1', 2)
         graph.addNode('2', 4, '1')
         graph.addNode('3', 6, '2')
-        graph.addNode('4', 8)
+        graph.addNode('4', 8) // should not be visited
         graph.addNode('5', 10, '4')
         graph.addNode('6', 12, '3')
         let values = []
         for (let val of graph.values('1')) {
           values.push(val)
         }
-        values.sort().should.eql([2, 4, 6, 12].sort())
+        values.should.eql([2, 4, 6, 12])
+      })
+
+      it('should iterate over all adjacent nodes when given a node', () => {
+        graph.addNode('0', 0)
+        graph.addNode('1.1', 1.1, '0')
+        graph.addNode('1.2', 1.2, '0')
+        graph.addNode('1.3', 1.3, '0')
+        graph.addNode('4', 8) // should not be visited
+        graph.addNode('2.1', 2.1, '1.1')
+        graph.addNode('2.2', 2.2, '1.2')
+        graph.addNode('2.3', 2.3, '1.3')
+        graph.addNode('3.1', 3.1, '2.1')
+        graph.addNode('3.2', 3.2, '2.2')
+        graph.addNode('3.3', 3.3, '2.3')
+        let values = []
+        for (let val of graph.values('0')) {
+          values.push(val)
+        }
+        values.should.eql([0, 1.1, 1.2, 1.3, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3])
       })
     })
 
@@ -280,6 +299,62 @@ describe('Graph', () => {
         graph.addNode('6', 12, '3')
         let keys = []
         for (let val of graph.keys('1')) {
+          keys.push(val)
+        }
+        keys.should.eql(['1', '2', '3', '6'])
+      })
+    })
+
+    describe('valuesDepthFirst', () => {
+      it('should iterate over all key/value pairs', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6, '2')
+        graph.addNode('4', 8)
+        let values = []
+        for (let val of graph.valuesDepthFirst()) {
+          values.push(val)
+        }
+        values.sort().should.eql([2, 4, 6, 8].sort())
+      })
+
+      it('should iterate over all adjacent nodes when given a node', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6, '2')
+        graph.addNode('4', 8)
+        graph.addNode('5', 10, '4')
+        graph.addNode('6', 12, '3')
+        let values = []
+        for (let val of graph.valuesDepthFirst('1')) {
+          values.push(val)
+        }
+        values.sort().should.eql([2, 4, 6, 12].sort())
+      })
+    })
+
+    describe('keysDepthFirst', () => {
+      it('should iterate over all key/value pairs', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6, '2')
+        graph.addNode('4', 8)
+        let keys = []
+        for (let val of graph.keysDepthFirst()) {
+          keys.push(val)
+        }
+        keys.sort().should.eql(['1', '2', '3', '4'].sort())
+      })
+
+      it('should iterate over all adjacent nodes when given a node', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6, '2')
+        graph.addNode('4', 8)
+        graph.addNode('5', 10, '4')
+        graph.addNode('6', 12, '3')
+        let keys = []
+        for (let val of graph.keysDepthFirst('1')) {
           keys.push(val)
         }
         keys.sort().should.eql(['1', '2', '3', '6'].sort())
