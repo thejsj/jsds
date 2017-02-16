@@ -1,6 +1,7 @@
 /*jshint mocha:true */
 import Graph from '../../lib/graph/graph'
 import 'should'
+const expect = require('chai').expect
 
 describe('Graph', () => {
   let graph
@@ -218,15 +219,18 @@ describe('Graph', () => {
   describe('Iterators', () => {
     describe('[Symbols.iterator]', () => {
       it('should iterate over all key/value pairs', () => {
-        graph.addNode('1', 1)
+        graph.addNode('1', 0)
         graph.addNode('2', 1, '1')
-        graph.addNode('3', 1, '2')
-        graph.addNode('4', 1)
+        graph.addNode('3', 2, '2')
+        graph.addNode('4', 3)
+        let keys = []
         let values = []
         for (let val of graph) {
-          values.push(val)
+          keys.push(val.key)
+          values.push(val.value)
         }
-        values.sort().should.eql([['1', 1], ['2', 1], ['3', 1], ['4', 1]].sort())
+        keys.sort().should.eql(['1', '2', '3', '4'].sort())
+        values.sort().should.eql([0, 1, 2, 3].sort())
       })
     })
 
@@ -361,13 +365,13 @@ describe('Graph', () => {
       })
     })
 
-    describe.only('Shortest Path', () => {
+    describe('Shortest Path', () => {
       it('should find a path between connected nodes', () => {
         graph.addNode('1', 2)
         graph.addNode('2', 4, '1')
         graph.addNode('3', 6, '2')
         const shortestPath = graph.getShortestPath('1', '3')
-        shortestPath.should.eql(['1', '2', '3'])
+        expect(shortestPath).to.deep.equal(['1', '2', '3'])
       })
 
       it('should not find a path between unconnected nodes', () => {
@@ -375,7 +379,7 @@ describe('Graph', () => {
         graph.addNode('2', 4, '1')
         graph.addNode('3', 6)
         const shortestPath = graph.getShortestPath('1', '3')
-        shortestPath.should.eql(null)
+        expect(shortestPath).to.equal(null)
       })
 
       it('should find a shorter path between connected nodes with two paths', () => {
@@ -385,10 +389,10 @@ describe('Graph', () => {
         graph.addNode('4', 6, '3')
         graph.addEdge('4', '2')
         const shortestPath = graph.getShortestPath('1', '4')
-        shortestPath.should.eql(['1', '2', '4'])
+        expect(shortestPath).to.deep.equal(['1', '2', '4'])
       })
 
-      it('should iterate over all adjacent nodes when given a node', () => {
+      it('should find a shorter path when given two longer paths', () => {
         graph.addNode('1', 2)
         graph.addNode('2.1', 4, '1')
         graph.addNode('3.1', 6, '2.1')
@@ -396,12 +400,46 @@ describe('Graph', () => {
         graph.addNode('5.1', 8, '4.1')
         graph.addNode('6.1', 8, '5.1')
         graph.addNode('final', 8, '6.1')
+        graph.addNode('2.2', 8, '1')
         graph.addNode('3.2', 8, '2.2')
         graph.addNode('4.2', 8, '3.2')
-        graph.addNode('5.2', 8, '4.1')
+        graph.addNode('5.2', 8, '4.2')
         graph.addEdge('final', '5.2')
         const shortestPath = graph.getShortestPath('1', 'final')
-        shortestPath.should.eql(['1', '2.2', '3.2', '4.2', '5.2', 'final'])
+        expect(shortestPath).to.deep.equal(['1', '2.2', '3.2', '4.2', '5.2', 'final'])
+      })
+
+      it('should handle loops', () => {
+        graph.addNode('0', 2)
+        graph.addNode('1.1', 4, '0')
+        graph.addNode('2.1', 4, '0')
+        graph.addNode('3.1', 4, '0')
+        graph.addNode('3.2', 4, '3.1')
+        graph.addNode('4.1', 4, '0')
+        graph.addNode('4.2', 6, '4.1')
+        graph.addNode('4.3.1', 8, '4.2')
+        graph.addNode('4.3.2', 8, '4.2')
+        graph.addNode('4.3.3', 8, '4.2')
+        graph.addNode('4.4', 8)
+        graph.addEdge('4.4', '4.3.1')
+        graph.addEdge('4.4', '4.3.2')
+        graph.addEdge('4.4', '4.3.3')
+        graph.addNode('4.5', 8, '4.4')
+        const shortestPath = graph.getShortestPath('0', '4.5')
+        expect(shortestPath).to.deep.equal([ '0', '4.1', '4.2', '4.3.1', '4.4', '4.5' ])
+      })
+
+      // Actually visits all nodes
+      it('should not visit unnecessary nodes', () => {
+        graph.addNode('0', 2)
+        graph.addNode('1', 2, '0')
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6, '2')
+        graph.addNode('4', 6, '3')
+        graph.addNode('5', 6, '4')
+        graph.addNode('6', 6, '5')
+        const shortestPath = graph.getShortestPath('1', '3')
+        expect(shortestPath).to.deep.equal(['1', '2', '3'])
       })
     })
   })
