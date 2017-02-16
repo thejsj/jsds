@@ -360,5 +360,49 @@ describe('Graph', () => {
         keys.sort().should.eql(['1', '2', '3', '6'].sort())
       })
     })
+
+    describe.only('Shortest Path', () => {
+      it('should find a path between connected nodes', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6, '2')
+        const shortestPath = graph.getShortestPath('1', '3')
+        shortestPath.should.eql(['1', '2', '3'])
+      })
+
+      it('should not find a path between unconnected nodes', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6)
+        const shortestPath = graph.getShortestPath('1', '3')
+        shortestPath.should.eql(null)
+      })
+
+      it('should find a shorter path between connected nodes with two paths', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2', 4, '1')
+        graph.addNode('3', 6, '2')
+        graph.addNode('4', 6, '3')
+        graph.addEdge('4', '2')
+        const shortestPath = graph.getShortestPath('1', '4')
+        shortestPath.should.eql(['1', '2', '4'])
+      })
+
+      it('should iterate over all adjacent nodes when given a node', () => {
+        graph.addNode('1', 2)
+        graph.addNode('2.1', 4, '1')
+        graph.addNode('3.1', 6, '2.1')
+        graph.addNode('4.1', 8, '3.1')
+        graph.addNode('5.1', 8, '4.1')
+        graph.addNode('6.1', 8, '5.1')
+        graph.addNode('final', 8, '6.1')
+        graph.addNode('3.2', 8, '2.2')
+        graph.addNode('4.2', 8, '3.2')
+        graph.addNode('5.2', 8, '4.1')
+        graph.addEdge('final', '5.2')
+        const shortestPath = graph.getShortestPath('1', 'final')
+        shortestPath.should.eql(['1', '2.2', '3.2', '4.2', '5.2', 'final'])
+      })
+    })
   })
 })
