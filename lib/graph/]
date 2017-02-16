@@ -68,6 +68,7 @@ const GraphNode = class GraphNode {
 }
 
 const _nodes_ = Symbol('nodes')
+const _lastInsertedNodeKey_ = Symbol('_lastInsertedNodeKey_')
 const _depthFirstIterator_ = Symbol('_depthFirstIterator_')
 const _breadthFirstIterator_ = Symbol('_breadthFirstIterator_')
 const _globalIterator_ = Symbol('_globalIterator_')
@@ -96,10 +97,8 @@ const Graph = class Graph {
     }
     let node = new GraphNode(key, value)
     this[_nodes_][key] = node
+    this[_lastInsertedNodeKey_] = key
     if (edgeNodeKey) {
-      if (!this[_nodes_][edgeNodeKey]) {
-        throw new Error(`Node with key ${edgeNodeKey} does not exist`)
-      }
       this.addEdge(key, edgeNodeKey)
     }
   }
@@ -112,6 +111,9 @@ const Graph = class Graph {
    */
   removeNode (key) {
     Object.keys(this[_nodes_][key].edges).forEach(edgeKey => {
+      if (this[_lastInsertedNodeKey_] === key) {
+        this[_lastInsertedNodeKey_] = edgeKey
+      }
       this[_nodes_][key].removeEdge(edgeKey)
       this[_nodes_][edgeKey].removeEdge(key)
     })
@@ -286,7 +288,7 @@ const Graph = class Graph {
     isStringOrUndefined(nodeKey)
     if (nodeKey) {
       const label = '' + Date.now() + Math.floor(Math.random() * 1000)
-      const node = this[_getNodeByKeyOrThrowError_](nodeKey)
+      const node = this[_getNodeByKeyOrThrowError_](key)
       yield * this[nodeIteratorSymbol](node, key, label)
     } else {
       yield * this[_globalIterator_](key)
@@ -354,6 +356,7 @@ const Graph = class Graph {
     const treeNodes = {}
     const sourceNode = this[_getNodeByKeyOrThrowError_](fromKey)
     const destinationNode = this[_getNodeByKeyOrThrowError_](toKey)
+    console.log('sourceNode.key', sourceNode.key)
     distances[sourceNode.key] = 0
 
     for (let node of this) {
@@ -366,20 +369,30 @@ const Graph = class Graph {
       heap.insertTree(newTree)
     }
 
-    while (heap.peek() !== null) {
+    console.log('prev for destination')
+    console.log(previous[destinationNode.key])
+
+    while (previous[destinationNode.key] === null) {
+      console.log('-------------')
+      console.log('keys', [...heap.keys()])
+      console.log('previous', previous)
       const node = heap.pop()[1]
+      console.log('Current key', node.key)
       for (let edgeKey of Object.keys(node.edges)) {
         let siblingNode = node.edges[edgeKey].node
-        if (distances[node.key] + 1 < distances[siblingNode.key]) {
+        if (distances[siblingNode.key] + 1 < distances[node.key]) {
+          console.log('UPDATE')
           distances[siblingNode.key] = distances[node.key] + 1
           previous[siblingNode.key] = node
+          console.log('tree', treeNodes[siblingNode.key])
           heap.decreaseChildKey(treeNodes[siblingNode.key], distances[siblingNode.key])
         }
       }
     }
+    console.log('!! prev')
+    console.log(previous)
 
     const buildPath = (paths, node, finalKey) => {
-      paths = [node.key].concat(paths)
       if (node.key === finalKey) return paths
       if (!previous[node.key]) return null
       let prev = previous[node.key]

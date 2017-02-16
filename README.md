@@ -14,8 +14,8 @@
 
 - [x] Undirected Graph with Adjacency List
 - [ ] Directed Graph with Adjacency List
-- [ ] Shortest Path
-  - [ ] Dijkstra's Algorithm
+- [x] Shortest Path
+  - [x] Dijkstra's Algorithm
 - [ ] Incidence List, Adjacency Matrix
 
 ### Hashes
